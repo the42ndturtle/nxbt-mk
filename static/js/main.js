@@ -262,10 +262,20 @@ setInterval(function() {
     if(document.getElementById(KEYMAP[key]))
     document.getElementById(KEYMAP[key]).innerHTML = CODEMAP[key];
   });
+  window.localStorage.setItem('lmba', document.getElementById('left-mouse-button-action').value);
+  window.localStorage.setItem('rmba', document.getElementById('right-mouse-button-action').value);
 }, 200);
 
 if(window.localStorage.getItem('KEYMAP') != null) {
   KEYMAP = JSON.parse(window.localStorage.getItem('KEYMAP'));
+}
+
+if(window.localStorage.getItem('lmba') != null) {
+  document.getElementById('left-mouse-button-action').value = window.localStorage.getItem('lmba');
+}
+
+if(window.localStorage.getItem('rmba') != null) {
+  document.getElementById('right-mouse-button-action').value = window.localStorage.getItem('rmba');
 }
 
 function rebind(button) {
@@ -340,6 +350,7 @@ let locked = true;
 
 document.addEventListener('keydown', e => {
   console.log(e.keyCode);
+  e.preventDefault();
   if(e.key == '`') {
     locked = document.body == document.pointerLockElement;
     if(!locked) document.body.requestPointerLock();
@@ -393,15 +404,15 @@ document.addEventListener('mousemove', e => {
 
 document.addEventListener('mousedown', e => {
   if(!locked){
-    if(e.which == 1) INPUT_PACKET['A'] = true;
-    if(e.which == 3) INPUT_PACKET['B'] = true;
+    if(e.which == 1) INPUT_PACKET[document.getElementById('left-mouse-button-action').value] = true;
+    if(e.which == 3) INPUT_PACKET[document.getElementById('right-mouse-button-action').value] = true;
   }
 });
 
 document.addEventListener('mouseup', e => {
   if(!locked) {
-    if(e.which == 1) INPUT_PACKET['A'] = false;
-    if(e.which == 3) INPUT_PACKET['B'] = false;
+    if(e.which == 1) INPUT_PACKET[document.getElementById('left-mouse-button-action').value] = false;
+    if(e.which == 3) INPUT_PACKET[document.getElementById('right-mouse-button-action').value] = false;
   }
 });
 
