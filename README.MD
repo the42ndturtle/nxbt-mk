@@ -1,4 +1,4 @@
-paste repo contents in the `web` folder and override conflicts.
+paste repo contents in the `web` folder of NXBT and override conflicts. NXBT can be located by runing `pip show nxbt`.
 
 to rebind keys, click the text of the button you want to rebind, for example, 'KeyA', then press the new key you want to bund to.
 
