@@ -264,6 +264,10 @@ setInterval(function() {
   });
 }, 200);
 
+if(window.localStorage.getItem('KEYMAP') != null) {
+  KEYMAP = JSON.parse(window.localStorage.getItem('KEYMAP'));
+}
+
 function rebind(button) {
   let delKey;
   Object.keys(KEYMAP).forEach(key => {
@@ -281,6 +285,7 @@ function rebind(button) {
       });
       if(done) KEYMAP[e.keyCode] = button;
       else KEYMAP[delKey] = button;
+      window.localStorage.setItem('KEYMAP', JSON.stringify(KEYMAP));
       document.removeEventListener('keydown', tempBind, false);
     }
     document.addEventListener('keydown', tempBind);
